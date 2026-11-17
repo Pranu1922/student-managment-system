@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A responsive student management dashboard built with HTML, CSS and JavaScript." />
+  <title>StudentHub | Student Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">S</span><span>Student<span class="brand-light">Hub</span></span></a>
+      <p class="nav-label">WORKSPACE</p>
+      <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-item" data-view="students"><span>♙</span> Students</button>
+      <div class="sidebar-bottom">
+        <div class="side-card"><div class="side-icon">✦</div><strong>Stay organized</strong><p>Manage student records in one simple place.</p></div>
+        <div class="profile-mini"><div class="avatar">A</div><div><strong>Admin User</strong><small>Administrator</small></div></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+        <div><p class="eyebrow">OVERVIEW</p><h1 id="pageTitle">Dashboard</h1></div>
+        <div class="top-actions"><span class="today" id="todayLabel"></span><button class="primary-btn" id="addStudentTop">＋ Add student</button></div>
+      </header>
+
+      <section id="dashboardView" class="view">
+        <div class="welcome">
+          <div><p class="eyebrow light">STUDENT MANAGEMENT</p><h2>Good to see you, Admin 👋</h2><p>Here’s what’s happening with your student records.</p></div>
+          <div class="welcome-art"><span>✦</span><span>✧</span><span>✦</span></div>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon purple">♙</span></div><strong id="totalCount">0</strong><small>Registered records</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Courses</span><span class="stat-icon peach">▤</span></div><strong id="courseCount">0</strong><small>Unique courses</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Average marks</span><span class="stat-icon green">↗</span></div><strong id="averageMarks">—</strong><small>Across all students</small></article>
+        </div>
+        <section class="panel">
+          <div class="panel-heading"><div><h3>Recently added students</h3><p>Your latest student records</p></div><button class="text-btn" id="viewAll">View all →</button></div>
+          <div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>COURSE</th><th>YEAR</th><th>MARKS</th></tr></thead><tbody id="recentRows"></tbody></table></div>
+          <div class="empty-state" id="recentEmpty"><span>♙</span><strong>No students yet</strong><p>Add your first student to get started.</p><button class="primary-btn" id="emptyAdd">＋ Add student</button></div>
+        </section>
+        <p class="footnote">StudentHub · Student Management System · Demo project</p>
+      </section>
+
+      <section id="studentsView" class="view hidden">
+        <section class="panel students-panel">
+          <div class="panel-heading"><div><h3>All students</h3><p>View, search, edit or remove student records.</p></div><button class="primary-btn" id="addStudentList">＋ Add student</button></div>
+          <div class="toolbar"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search by name, ID or course..." /></label><select id="courseFilter" aria-label="Filter by course"><option value="">All courses</option></select></div>
+          <div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>COURSE</th><th>YEAR</th><th>MARKS</th><th>ACTIONS</th></tr></thead><tbody id="studentRows"></tbody></table></div>
+          <div class="empty-state hidden" id="studentsEmpty"><span>⌕</span><strong>No matching students</strong><p>Try another search or add a new record.</p></div>
+        </section>
+        <p class="footnote">Tip: Your data is saved in this browser using local storage.</p>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head"><div><p class="eyebrow">STUDENT RECORD</p><h2 id="modalTitle">Add a student</h2></div><button class="close-btn" id="closeModal" aria-label="Close">×</button></div>
+      <form id="studentForm">
+        <input type="hidden" id="editId">
+        <div class="form-grid">
+          <label>Full name<input id="name" required maxlength="60" placeholder="e.g. Aanya Sharma"></label>
+          <label>Student ID<input id="studentId" required maxlength="20" placeholder="e.g. BCA2026001"></label>
+          <label>Course<input id="course" required maxlength="40" placeholder="e.g. BCA"></label>
+          <label>Academic year<select id="year" required><option value="">Select year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option></select></label>
+          <label class="full">Email address<input id="email" type="email" placeholder="student@example.com"></label>
+          <label>Marks (%)<input id="marks" type="number" min="0" max="100" step="0.1" required placeholder="e.g. 82"></label>
+        </div>
+        <div class="form-actions"><button type="button" class="secondary-btn" id="cancelModal">Cancel</button><button class="primary-btn" type="submit" id="saveBtn">Save student</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
